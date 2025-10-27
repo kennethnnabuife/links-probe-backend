@@ -103,7 +103,7 @@ app.listen(PORT, () => {
     `🌍 Ready to receive requests from ${process.env.FRONTEND_ORIGIN}`
   );
 
-  //Keep-alive ping every 14 minutes (Render auto-sleeps after 15 min)
+  //Keep-alive ping every 14 minutes
   const SELF_URL = process.env.BACKEND_URL;
   setInterval(async () => {
     try {
