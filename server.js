@@ -18,7 +18,7 @@ app.use(
 
 app.use(express.json());
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 app.post("/scan", async (req, res) => {
   const { url } = req.body;
