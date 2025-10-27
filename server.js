@@ -20,6 +20,11 @@ app.use(express.json());
 
 const PORT = process.env.PORT;
 
+//Basic route for uptime checks
+app.get("/", (req, res) => {
+  res.send("✅ LinksProbe backend is alive!");
+});
+
 app.post("/scan", async (req, res) => {
   const { url } = req.body;
   console.log("🛰️ [REQUEST] /scan called with URL:", url);
@@ -97,4 +102,15 @@ app.listen(PORT, () => {
   console.log(
     `🌍 Ready to receive requests from ${process.env.FRONTEND_ORIGIN}`
   );
+
+  //Keep-alive ping every 14 minutes (Render auto-sleeps after 15 min)
+  const SELF_URL = process.env.BACKEND_URL;
+  setInterval(async () => {
+    try {
+      await axios.get(SELF_URL);
+      console.log("💓 Keep-alive ping sent successfully.");
+    } catch (err) {
+      console.error("⚠️ Keep-alive ping failed:", err.message);
+    }
+  }, 840000); // 14 minutes
 });
